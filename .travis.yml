@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - "3.6"
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'CREATE DATABASE fbs_test;' -U postgres
+  - python manage.py makemigrations
+  - python manage.py migrate
+
+install:
+  - pip install pipenv
+  - pipenv install
+
+script:
+  - coverage run --source=. ./manage.py test
+  - coverage report -m
+  - coveralls
+
+after_success:
+  - coveralls
