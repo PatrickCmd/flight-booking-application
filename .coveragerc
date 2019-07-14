@@ -1,0 +1,14 @@
+[report]
+omit = 
+    manage.py
+    flight/admin.py
+    flight/apps.py
+    flight/__init__.py
+    auth/admin.py
+    auth/apps.py
+    auth/__init__.py
+    fbs/*
+    */tests/*
+    */migrations/*
+    */python?.?/*
+    */site-packages/*
