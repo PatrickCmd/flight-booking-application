@@ -3,9 +3,11 @@
 import os
 import sys
 
+from environment import get_env
+
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fbs.settings')
+    get_env()
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
