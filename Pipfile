@@ -15,6 +15,11 @@ django-heroku = "*"
 dj-database-url = "*"
 flake8 = "*"
 coveralls = "*"
+pillow = "*"
+werkzeug = "*"
+djangorestframework = "*"
+django-filter = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.7"
