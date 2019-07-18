@@ -15,6 +15,8 @@ from authenticate.serializers import (RegistrationSerializer,
                                       UserSerializer)
 from authenticate.renderers import UserJSONRenderer
 
+from fbs.mailer import sendEmailVerification
+
 
 class RegistrationAPIView(APIView):
     """Register a user to the platform"""
@@ -28,22 +30,8 @@ class RegistrationAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         user_data = serializer.data
-        self.sendEmailVerification(request, user, user_data)
+        # sendEmailVerification(request, user, user_data)
         return Response(user_data, status=status.HTTP_201_CREATED)
-    
-    def sendEmailVerification(self, request, user, user_data):
-        username = user.get('first_name')
-        subject = "FBS Account Verification"
-        body = f"Hello {username}, Thank you for registering on our system with us, kindly \
-                click the link below to activate your account! \
-                http://{request.get_host()}/fbs-api/users/verify_account/{user_data.get('token')}"
-        to_email = [user.get('email')]
-        email = EmailMessage(subject, body, to=to_email)
-        email.send()
-        user_data.update(
-            {'message': 'A verification link has been sent to your email, please visit your email '
-                        'and activate your account.'}
-        )
 
 
 class LoginAPIView(APIView):

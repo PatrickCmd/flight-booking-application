@@ -19,4 +19,5 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('fbs-api/', include('authenticate.urls', namespace='authenticate')),
+    path('fbs-api/', include('profiles.urls', namespace='profiles')),
 ]
