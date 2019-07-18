@@ -8,7 +8,7 @@ from .models import User
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
-    authentication_header_prefix = 'token'
+    authentication_header_prefix = 'JWT-Token'
 
     def authenticate(self, request):
         request.user = None

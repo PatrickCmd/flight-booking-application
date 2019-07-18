@@ -66,7 +66,7 @@ class User(AbstractBaseUser):
     image = models.ImageField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
     update_at = models.DateTimeField(auto_now=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
