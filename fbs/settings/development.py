@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'authenticate',
-    'profiles',
     'flight',
+    'profiles',
 ]
 
 MIDDLEWARE = [
