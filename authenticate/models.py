@@ -57,6 +57,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
     date_of_birth = models.DateField()
+    username = models.CharField(max_length=100, blank=True, null=True)
     first_name = models.CharField(max_length=100, null=True)
     middle_name = models.CharField(max_length=100, null=True, blank=True)
     last_name = models.CharField(max_length=100, null=True)

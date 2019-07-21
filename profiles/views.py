@@ -1,12 +1,15 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.decorators import detail_route
 from rest_framework.exceptions import (
     ValidationError, PermissionDenied
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, JSONParser
+
+import cloudinary.uploader
 
 from .models import PassportInfo
 from .serializers import PassPortSerializer
@@ -42,3 +45,27 @@ class PassportInfoViewSet(ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class PassportPhotoUploadView(APIView):
+    parser_classes = (
+        MultiPartParser,
+        JSONParser,
+    )
+
+    @staticmethod
+    def post(request, pk):
+        if request.FILES.get('passport_photo'):
+            file = request.data.get('passport_photo')
+
+            upload_data = cloudinary.uploader.upload(file)
+            passport = PassportInfo.objects.get(pk=pk)
+            passport.passport_photo = upload_data['secure_url']
+            passport.save()
+            return Response({
+                'profile': {
+                    'status': 'success',
+                    'passport_photo_url': upload_data['secure_url'],
+                    'photo_data': upload_data,
+                }
+            }, status=status.HTTP_201_CREATED)

@@ -83,10 +83,98 @@ $ python manage.py createsuperuser
 ```
 $ python manage.py runserver_plus
 ```
-Execute the url **localhost:8000/fbs-api** in your browser
+Execute the url **localhost:8000/** in your browser
 
 ## Run tests
 Execute this command at the terminal
 ```
 $ python manage.py test
 ```
+
+## TESTING THE API
+### API URL ENDPOINTS
+#### Register users: Methods['POST'] `http://localhost:8000/fbs-api/users/`
+```
+{   "email": "example.example@andela.com",
+    "password": "Example1234#",
+    "date_of_birth": "1900-11-19",
+    "first_name": "Example",
+    "middle_name": "",
+    "last_name": "Example Last",
+    "gender": "m",
+    "location": "Kyebando",
+    "phone": "256786893374"
+}
+```
+#### Login user: Methods['POST'] `http://localhost:8000/fbs-api/users/login/`
+```
+{	
+    "email": "example.example@andela.com",
+    "password": "Example234#"
+}
+```
+#### Create user profile: Methods['POST'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/profiles/`
+```
+{	
+    "using_country": "KENYA",
+    "country_of_citizenship": "KENYA",
+    "passport_number": "K510192823",
+    "issue_date": "2018-08-08",
+    "expiration_date": "2028-08-08",
+    "passport_photo": ""
+}
+```
+#### Profile Details: Methods['GET', 'PUT/PATCH', 'DELETE'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/profiles/4/`
+
+#### Upload passport photo: Methods['POST'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/profiles/4/`
+```
+Form data
+{
+    'passport_photo': 'file.png or file.jpg'
+}
+```
+#### Create Flight Admins[Superusers] only: Methods['POST'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/flights/`
+```
+{
+    "name": "Entebbe to Denver",
+    "origin": "Entebbe",
+    "destination": "Denver",
+    "departure": "2019-08-02T08:00:00Z",
+    "arrival": "2019-08-03T07:00:00Z",
+    "aircraft": "Vintage",
+    "status": "ON_TIME",
+    "number": "KPQYWT72839",
+    "capacity": 120
+}
+```
+
+##### Flight Details Admins[Superusers] only: Methods['PUT', 'DELETE'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/flights/<id>`
+```
+{
+    "name": "Entebbe to Denver",
+    "origin": "Entebbe",
+    "destination": "Denver",
+    "departure": "2019-08-02T08:00:00Z",
+    "arrival": "2019-08-03T07:00:00Z",
+    "aircraft": "Vintage",
+    "status": "ON_TIME",
+    "number": "KPQYWT72839",
+    "capacity": 120
+}
+```
+
+#### Get flight: Methods['GET'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/flights/<id>`
+
+#### Make Reservation: Methods['POST'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/flights/<id>/reservation`
+
+```
+{
+    'seat': 'A6'
+}
+```
+
+#### See Reservation: Methods['GET'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/flights/<id>/reservation/<id>`
+
+#### Cancel Reservation: Methods['PATCH'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/flights/<id>/reservation/<id>/cancel`
+
+#### Number of Reservation on given day for a given flight: Methods['GET'] Authorization JWT-TOKEN token `http://localhost:8000/fbs-api/reservations/<flight_pk>/count/<date>/`
