@@ -12,6 +12,7 @@ class PassPortSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'create_at': {'read_only': True},
             'updated_at': {'read_only': True},
+            'passport_photo': {'read_only': True},
         }
         fields = ('id', 'owner', 'using_country', 'country_of_citizenship',
                   'passport_number', 'issue_date', 'expiration_date',

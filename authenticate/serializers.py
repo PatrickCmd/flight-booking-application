@@ -20,7 +20,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
 
-        fields = ['email', 'password', 'date_of_birth', 'token',
+        extra_kwargs = {
+            'username': {'read_only': True},
+        }
+        fields = ['email', 'password', 'date_of_birth', 'username', 'token',
                   'first_name', 'middle_name', 'last_name', 'gender',
                   'location', 'phone', 'image']
     
