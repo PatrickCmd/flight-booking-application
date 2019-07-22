@@ -1,19 +1,18 @@
 import math
 
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 
-from rest_framework import mixins, status
-from rest_framework.decorators import action, api_view
-from rest_framework.exceptions import (PermissionDenied,
-                                       ValidationError)
-from rest_framework.generics import (ListAPIView,
-                                     ListCreateAPIView,
-                                     RetrieveUpdateDestroyAPIView,
-                                     UpdateAPIView)
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 
 
 from .serializers import FlightSerializer, ReservationSerializer
@@ -31,15 +30,18 @@ class FlightListCreateView(ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         if not request.user.is_admin:
-            raise PermissionDenied("You don't have permissions to carry out this action.")
+            raise PermissionDenied(
+                "You don't have permissions to carry out this action."
+            )
         return super().create(request, *args, **kwargs)
-    
+
     def perform_create(self, serializer):
         flight = serializer.save(created_by=self.request.user)
         seats_per_row = 9
-        row_count = math.ceil(serializer.data['capacity'] / seats_per_row)
-        generate_seats(Seat, flight, start_row=1, row_count=row_count,
-                       seats_per_row=seats_per_row)
+        row_count = math.ceil(serializer.data["capacity"] / seats_per_row)
+        generate_seats(
+            Seat, flight, start_row=1, row_count=row_count, seats_per_row=seats_per_row
+        )
 
 
 class FlightRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
@@ -52,12 +54,16 @@ class FlightRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
     def update(self, request, *args, **kwargs):
         if not request.user.is_admin:
-            raise PermissionDenied("You don't have permissions to carry out this action.")
+            raise PermissionDenied(
+                "You don't have permissions to carry out this action."
+            )
         return super().update(request, *args, **kwargs)
-    
+
     def destroy(self, request, *args, **kwargs):
         if not request.user.is_admin:
-            raise PermissionDenied("You don't have permissions to carry out this action.")
+            raise PermissionDenied(
+                "You don't have permissions to carry out this action."
+            )
         return super().destroy(request, *args, **kwargs)
 
 
@@ -76,11 +82,13 @@ class ReservationListCreateView(ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
-    
+
     def perform_create(self, serializer):
-        flight = Flight.objects.get(pk=self.kwargs.get('pk'))
+        flight = Flight.objects.get(pk=self.kwargs.get("pk"))
         try:
-            seat = Seat.objects.get(seat_number=self.request.data['seat'], flight=flight)
+            seat = Seat.objects.get(
+                seat_number=self.request.data["seat"], flight=flight
+            )
             if not seat.is_available:
                 raise ValidationError("Seat is not available")
         except Seat.DoesNotExist:
@@ -101,17 +109,19 @@ class ReservationRetrieveDestroyAPIView(RetrieveUpdateDestroyAPIView):
     def get_object(self):
         obj = get_object_or_404(
             self.get_queryset(),
-            pk=self.kwargs.get('pk'),
-            flight_id=self.kwargs.get('flight_pk')
+            pk=self.kwargs.get("pk"),
+            flight_id=self.kwargs.get("flight_pk"),
         )
         return obj
 
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
-    
+
     def destroy(self, request, *args, **kwargs):
         if not request.user.is_admin:
-            raise PermissionDenied("You don't have permissions to carry out this action.")
+            raise PermissionDenied(
+                "You don't have permissions to carry out this action."
+            )
         return super().destroy(request, *args, **kwargs)
 
 
@@ -126,26 +136,25 @@ class CancelReservationAPIView(UpdateAPIView):
     def get_object(self):
         obj = get_object_or_404(
             self.get_queryset(),
-            pk=self.kwargs.get('pk'),
-            flight_id=self.kwargs.get('flight_pk')
+            pk=self.kwargs.get("pk"),
+            flight_id=self.kwargs.get("flight_pk"),
         )
         return obj
 
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
-    
+
     def perform_update(self, serializer):
         serializer.save(is_cancelled=True)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def flight_reservation_count(request, flight_pk, date, format=None):
 
-    if request.method == 'GET':
-        queryset = Reservation.objects.filter(Q(flight_id=flight_pk) \
-                    & Q(reserved_at__date=date))
+    if request.method == "GET":
+        queryset = Reservation.objects.filter(
+            Q(flight_id=flight_pk) & Q(reserved_at__date=date)
+        )
         count = queryset.count()
-        content = {
-            'reservations': {'count': count}
-        }
+        content = {"reservations": {"count": count}}
         return Response(content, status=status.HTTP_200_OK)

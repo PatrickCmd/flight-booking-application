@@ -1,54 +1,59 @@
 from datetime import timedelta
 
 from celery.task.schedules import crontab
-from celery.decorators import periodic_task, task
+from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
 
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail
 
-import traceback
 
 logger = get_task_logger(__name__)
 
-SUBJECT = 'FBS Travel Reminder'
+SUBJECT = "FBS Travel Reminder"
 
-EMAIL_BODY = '''
-Hi {username}, 
-We would like to remind that your flight({flight_number}) to {destination} will depart from {origin} 
+EMAIL_BODY = """
+Hi {username},
+We would like to remind that your flight({flight_number}) to {destination} will depart from {origin}
 at {departure_time}.
 Regards,
 FBS team.
-'''
+"""
 
 
 @periodic_task(
-    run_every=(crontab(minute='*/1')),
+    run_every=(crontab(minute="*/1")),
     name="travel_reminder",
     max_retries=5,
-    ignore_result=False
+    ignore_result=False,
 )
 def remind_traveler():
     from flights.models import Reservation
+
     current_date = timezone.now().today()
     upper_bound = current_date + timedelta(days=2)
     reservations = Reservation.objects.filter(
         flight__departure__date__gt=current_date,
         flight__departure__date__lt=upper_bound,
-        is_cancelled=False
+        is_cancelled=False,
     ).all()
 
     for reservation in reservations:
         email_kwargs = {
-            'username': reservation.user.first_name,
-            'flight_number': reservation.flight.number,
-            'destination': reservation.flight.destination,
-            'origin': reservation.flight.origin,
-            'departure_time': reservation.flight.departure
+            "username": reservation.user.first_name,
+            "flight_number": reservation.flight.number,
+            "destination": reservation.flight.destination,
+            "origin": reservation.flight.origin,
+            "departure_time": reservation.flight.departure,
         }
         body = EMAIL_BODY.format(**email_kwargs)
-        send_mail(subject=SUBJECT, message=body, from_email=settings.EMAIL_HOST,
-                  recipient_list=[reservation.user.email])
-        logger.info('Successfully sent mail to {email}'.format(
-            email=reservation.user.email))
+        send_mail(
+            subject=SUBJECT,
+            message=body,
+            from_email=settings.EMAIL_HOST,
+            recipient_list=[reservation.user.email],
+        )
+        logger.info(
+            "Successfully sent mail to {email}".format(email=reservation.user.email)
+        )

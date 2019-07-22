@@ -10,21 +10,55 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('flight', '0004_auto_20190719_0900'),
+        ("flight", "0004_auto_20190719_0900"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Reservation',
+            name="Reservation",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('seats', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=5), blank=True, size=None)),
-                ('status', models.CharField(choices=[('ACTIVE', 'ACTIVE'), ('CANCELLED', 'CANCELLED')], default='ACTIVE', max_length=10)),
-                ('is_cancelled', models.BooleanField(default=False)),
-                ('reserved_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('flight', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='flight.Flight')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "seats",
+                    django.contrib.postgres.fields.ArrayField(
+                        base_field=models.CharField(max_length=5), blank=True, size=None
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("ACTIVE", "ACTIVE"), ("CANCELLED", "CANCELLED")],
+                        default="ACTIVE",
+                        max_length=10,
+                    ),
+                ),
+                ("is_cancelled", models.BooleanField(default=False)),
+                ("reserved_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "flight",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reservations",
+                        to="flight.Flight",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reservations",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-        ),
+        )
     ]

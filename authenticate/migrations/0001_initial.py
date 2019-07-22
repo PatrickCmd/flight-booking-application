@@ -8,31 +8,55 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('email', models.EmailField(max_length=255, unique=True, verbose_name='email address')),
-                ('date_of_birth', models.DateField()),
-                ('first_name', models.CharField(max_length=100, null=True)),
-                ('middle_name', models.CharField(max_length=100, null=True)),
-                ('last_name', models.CharField(max_length=100, null=True)),
-                ('gender', models.CharField(choices=[('m', 'Male'), ('f', 'Female'), ('o', 'Other')], max_length=1)),
-                ('location', models.CharField(max_length=100, null=True)),
-                ('phone', models.CharField(max_length=30)),
-                ('image', models.ImageField(blank=True, null=True, upload_to='')),
-                ('date_created', models.DateTimeField(verbose_name=django.utils.timezone.now)),
-                ('is_active', models.BooleanField(default=True)),
-                ('is_admin', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        max_length=255, unique=True, verbose_name="email address"
+                    ),
+                ),
+                ("date_of_birth", models.DateField()),
+                ("first_name", models.CharField(max_length=100, null=True)),
+                ("middle_name", models.CharField(max_length=100, null=True)),
+                ("last_name", models.CharField(max_length=100, null=True)),
+                (
+                    "gender",
+                    models.CharField(
+                        choices=[("m", "Male"), ("f", "Female"), ("o", "Other")],
+                        max_length=1,
+                    ),
+                ),
+                ("location", models.CharField(max_length=100, null=True)),
+                ("phone", models.CharField(max_length=30)),
+                ("image", models.ImageField(blank=True, null=True, upload_to="")),
+                (
+                    "date_created",
+                    models.DateTimeField(verbose_name=django.utils.timezone.now),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                ("is_admin", models.BooleanField(default=False)),
             ],
-            options={
-                'abstract': False,
-            },
-        ),
+            options={"abstract": False},
+        )
     ]

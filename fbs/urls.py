@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import generic
 
-from rest_framework.response import Response
 from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 
@@ -25,13 +24,12 @@ from rest_framework.schemas import get_schema_view
 schema_view = get_schema_view(title="FBS Platform API", permission_classes=[])
 
 urlpatterns = [
-    path('', generic.RedirectView.as_view(url='/docs', permanent=False)),
-    path('admin/', admin.site.urls),
-    path('fbs-api/', include('authenticate.urls', namespace='authenticate')),
-    path('fbs-api/', include('profiles.urls', namespace='profiles')),
-    path('fbs-api/', include('flight.urls', namespace='flights')),
-
+    path("", generic.RedirectView.as_view(url="/docs", permanent=False)),
+    path("admin/", admin.site.urls),
+    path("fbs-api/", include("authenticate.urls", namespace="authenticate")),
+    path("fbs-api/", include("profiles.urls", namespace="profiles")),
+    path("fbs-api/", include("flight.urls", namespace="flights")),
     # documentation urls
-    path('docs', include_docs_urls(title='FBS Platform API', permission_classes=[])),
-    path('schema', schema_view),
+    path("docs", include_docs_urls(title="FBS Platform API", permission_classes=[])),
+    path("schema", schema_view),
 ]

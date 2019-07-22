@@ -1,25 +1,22 @@
-from django.core.mail import EmailMessage
-from django.shortcuts import redirect
-from rest_framework import serializers, status
+from rest_framework import status
 
-from rest_framework.authentication import get_authorization_header
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from authenticate.backends import JWTAuthentication
 from authenticate.models import User
-from authenticate.serializers import (RegistrationSerializer,
-                                      LoginSerializer,
-                                      UserSerializer)
+from authenticate.serializers import (
+    RegistrationSerializer,
+    LoginSerializer,
+    UserSerializer,
+)
 from authenticate.renderers import UserJSONRenderer
-
-from fbs.mailer import sendEmailVerification
 
 
 class RegistrationAPIView(APIView):
     """Register a user to the platform"""
+
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
     serializer_class = RegistrationSerializer
@@ -53,14 +50,14 @@ class UserRetrieveUpdateView(RetrieveUpdateAPIView):
     retrieve: fetch a user's details.
     update: Modif a user's details.
     """
+
     permission_classes = (IsAuthenticated,)
     renderer_classes = (UserJSONRenderer,)
     serializer_class = UserSerializer
+    lookup_field = "pk"
 
-    def retrieve(self, request, *args, **kwargs):
-        serializer = self.serializer_class(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
+    queryset = User.objects.all()
+
     def update(self, request, *args, **kwargs):
         serializer = self.serializer_class(
             request.user, data=request.data, partial=True
@@ -71,24 +68,27 @@ class UserRetrieveUpdateView(RetrieveUpdateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class AccountVerifyAPIView(APIView, JWTAuthentication):
-    """
-    user email: Send verification link to the user email
-    """
-    permission_classes = (AllowAny,)
-    renderer_classes = (UserJSONRenderer,)
-    serializer_class = UserSerializer
+# class AccountVerifyAPIView(APIView, JWTAuthentication):
+#     """
+#     user email: Send verification link to the user email
+#     """
 
-    def get(self, request, token):
-        try:
-            user, user_token = self.authenticate_credentials(request, token)
-            if not user.is_verified:
-                user.is_verified = True
-                user.save()
-                return redirect(f"http://{request.get_host()}/fbs-api/users/login")
-            return Response({"message": f"Go to login http://{request.get_host()}/fbs-api/users/login"},
-                            status=status.HTTP_200_OK)
-        except:
-            raise serializers.ValidationError(
-                'Activation link invalid or expired'
-            )
+#     permission_classes = (AllowAny,)
+#     renderer_classes = (UserJSONRenderer,)
+#     serializer_class = UserSerializer
+
+#     def get(self, request, token):
+#         try:
+#             user, user_token = self.authenticate_credentials(request, token)
+#             if not user.is_verified:
+#                 user.is_verified = True
+#                 user.save()
+#                 return redirect(f"http://{request.get_host()}/fbs-api/users/login")
+#             return Response(
+#                 {
+#                     "message": f"Go to login http://{request.get_host()}/fbs-api/users/login"
+#                 },
+#                 status=status.HTTP_200_OK,
+#             )
+#         except:
+#             raise serializers.ValidationError("Activation link invalid or expired")

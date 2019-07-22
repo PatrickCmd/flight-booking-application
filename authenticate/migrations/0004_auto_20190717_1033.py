@@ -5,19 +5,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('authenticate', '0003_auto_20190717_0715'),
-    ]
+    dependencies = [("authenticate", "0003_auto_20190717_0715")]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='is_verified',
+            model_name="user",
+            name="is_verified",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='user',
-            name='update_at',
+            model_name="user",
+            name="update_at",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

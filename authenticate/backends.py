@@ -8,7 +8,7 @@ from .models import User
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
-    authentication_header_prefix = 'JWT-Token'
+    authentication_header_prefix = "JWT-Token"
 
     def authenticate(self, request):
         request.user = None
@@ -18,14 +18,14 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
         if not auth_header:
             return None
-        
+
         if len(auth_header) == 1:
             return None
         elif len(auth_header) > 2:
             return None
-        
-        prefix = auth_header[0].decode('utf-8')
-        token = auth_header[1].decode('utf-8')
+
+        prefix = auth_header[0].decode("utf-8")
+        token = auth_header[1].decode("utf-8")
 
         if prefix.lower() != auth_header_prefix:
             return None
@@ -34,18 +34,18 @@ class JWTAuthentication(authentication.BaseAuthentication):
     def authenticate_credentials(self, request, token):
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
-        except:
-            msg = 'Invalid authentication. Could not decode token'
+        except:  # noqa E722
+            msg = "Invalid authentication. Could not decode token"
             raise exceptions.AuthenticationFailed(msg)
-        
+
         try:
-            user = User.objects.get(pk=payload['id'])
+            user = User.objects.get(pk=payload["id"])
         except User.DoesNotExist:
             msg = "No user matching this token"
-            raise exceptions.AuthenticationFailed('msg')
-        
-        if not user.is_active:
-            msg = 'This user has been activted'
             raise exceptions.AuthenticationFailed(msg)
-        
+
+        if not user.is_active:
+            msg = "This user has been activted"
+            raise exceptions.AuthenticationFailed(msg)
+
         return (user, token)

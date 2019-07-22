@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('authenticate', '0005_auto_20190718_0620'),
-    ]
+    dependencies = [("authenticate", "0005_auto_20190718_0620")]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='username',
+            model_name="user",
+            name="username",
             field=models.CharField(blank=True, max_length=100, null=True),
-        ),
+        )
     ]

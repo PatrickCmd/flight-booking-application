@@ -5,18 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('flight', '0005_reservation'),
-    ]
+    dependencies = [("flight", "0005_reservation")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='reservation',
-            name='seats',
-        ),
+        migrations.RemoveField(model_name="reservation", name="seats"),
         migrations.AddField(
-            model_name='reservation',
-            name='seat',
+            model_name="reservation",
+            name="seat",
             field=models.CharField(max_length=5, null=True),
         ),
     ]

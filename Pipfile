@@ -24,6 +24,8 @@ celery = "*"
 django-rest-swagger = "*"
 pyyaml = "*"
 cloudinary = "*"
+tox-pipenv = "*"
+black = "==19.3b0"
 
 [requires]
 python_version = "3.7"

@@ -5,19 +5,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('profiles', '0001_initial'),
-    ]
+    dependencies = [("profiles", "0001_initial")]
 
     operations = [
         migrations.AlterField(
-            model_name='passportinfo',
-            name='expiration_date',
+            model_name="passportinfo",
+            name="expiration_date",
             field=models.DateField(null=True),
         ),
         migrations.AlterField(
-            model_name='passportinfo',
-            name='issue_date',
+            model_name="passportinfo",
+            name="issue_date",
             field=models.DateField(null=True),
         ),
     ]
