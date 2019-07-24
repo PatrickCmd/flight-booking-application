@@ -6,13 +6,16 @@ from .views import PassportInfoViewSet, PassportPhotoUploadView
 
 
 router = DefaultRouter()
-router.register(r'profiles', PassportInfoViewSet, base_name='profiles')
+router.register(r"profiles", PassportInfoViewSet, base_name="profiles")
 
 
-app_name = 'profiles'
+app_name = "profiles"
 
 urlpatterns = [
-    path('profiles/<pk>/upload_passport_photo', PassportPhotoUploadView.as_view(),
-         name='upload_passport_photo'),
+    path(
+        "profiles/<pk>/upload_passport_photo",
+        PassportPhotoUploadView.as_view(),
+        name="upload_passport_photo",
+    )
 ]
 urlpatterns += router.urls

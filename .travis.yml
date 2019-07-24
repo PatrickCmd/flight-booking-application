@@ -16,7 +16,7 @@ install:
   - pipenv install
 
 script:
-  - flake8
+  - flake8 --max-line-length=100
   - coverage run --source=. ./manage.py test
   - coverage report -m
   - coveralls

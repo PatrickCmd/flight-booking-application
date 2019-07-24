@@ -6,14 +6,12 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('authenticate', '0001_initial'),
-    ]
+    dependencies = [("authenticate", "0001_initial")]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='date_created',
+            model_name="user",
+            name="date_created",
             field=models.DateTimeField(default=django.utils.timezone.now),
-        ),
+        )
     ]

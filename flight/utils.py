@@ -1,4 +1,5 @@
-letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 
 class Seat:
     def __init__(self, letter, row_number):
@@ -7,6 +8,7 @@ class Seat:
 
     def __str__(self):
         return f"{self.letter}{self.row_number}"
+
 
 def generate_seats(seat_model, flight_instance, start_row, row_count, seats_per_row):
     for row_number in range(start_row, row_count + start_row):

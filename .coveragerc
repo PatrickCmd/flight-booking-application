@@ -1,12 +1,17 @@
 [report]
 omit = 
     manage.py
+    setup.py
     flight/admin.py
     flight/apps.py
     flight/__init__.py
-    auth/admin.py
-    auth/apps.py
-    auth/__init__.py
+    profiles/admin.py
+    profiles/apps.py
+    profiles/__init__.py
+    authenticate/admin.py
+    authenticate/apps.py
+    authenticate/__init__.py
+    core/__init__.py
     fbs/*
     */tests/*
     */migrations/*
