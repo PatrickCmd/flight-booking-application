@@ -1,6 +1,8 @@
 [report]
 omit = 
+    environment.py
     manage.py
+    locustfile.py
     setup.py
     flight/admin.py
     flight/apps.py

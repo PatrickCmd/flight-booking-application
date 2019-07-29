@@ -26,6 +26,8 @@ pyyaml = "*"
 cloudinary = "*"
 tox-pipenv = "*"
 black = "==19.3b0"
+locustio = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
