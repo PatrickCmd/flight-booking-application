@@ -13,6 +13,14 @@
 - **Pipenv**: [Pipenv](https://docs.pipenv.org/) is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world.
 - **Psycopg2**: [Psycopg](http://initd.org/psycopg/) is the most popular PostgreSQL adapter for the Python programming language.
 
+## API Documentation
+Visit the links below for the API documentation
+
+[CoreApi Documentation](https://flight-booking-system-api.herokuapp.com/docs)
+
+## Live API
+Vist this [Link](https://flight-booking-system-api.herokuapp.com/) for the live application.
+
 ## SETTING UP THE PROJECT
 
 ### Clone the project
