@@ -1,59 +1,77 @@
 {
-  "addons": [
-    "heroku-postgresql"
-  ],
-  "buildpacks": [
-
-  ],
-  "description": "Flight Booking Application that enables passengers to reserve/book tickets for their flights.",
-  "env": {
-    "ALLOWED_HOSTS": {
-      "required": true
+    "addons": [
+      "heroku-postgresql"
+    ],
+    "buildpacks": [
+  
+    ],
+    "description": "Flight Booking Application that enables passengers to reserve/book tickets for their flights.",
+    "env": {
+      "ALLOWED_HOSTS": {
+        "required": true
+      },
+      "APP_SETTINGS": {
+        "required": true
+      },
+      "CLOUD_API_KEY": {
+        "required": true
+      },
+      "CLOUD_API_SECRET": {
+        "required": true
+      },
+      "CLOUD_NAME": {
+        "required": true
+      },
+      "DATABASE_URL": {
+          "required": true
+      },
+      "DB_NAME": {
+          "required":false
+      },
+      "DB_USER": {
+        "required": false
+      },
+      "DB_PASSWORD": {
+        "required": false
+      },
+      "DB_HOST": {
+        "required": true
+      },
+      "DEBUG": {
+        "required": true
+      },
+      "DISABLE_COLLECTSTATIC": {
+          "required": true
+      },
+      "EMAIL_BACKEND": {
+        "required": true
+      },
+      "EMAIL_HOST": {
+        "required": true
+      },
+      "EMAIL_HOST_PASSWORD": {
+        "required": true
+      },
+      "EMAIL_HOST_USER": {
+        "required": true
+      },
+      "EMAIL_PORT": {
+        "required": true
+      },
+      "EMAIL_USE_TLS": {
+        "required": true
+      },
+      "REDIS_URL": {
+        "required": true
+      },
+      "SECRET_KEY": {
+        "required": true
+      }
     },
-    "APP_SETTINGS": {
-      "required": true
+    "formation": {
     },
-    "CLOUD_API_KEY": {
-      "required": true
+    "name": "flight-booking-application",
+    "scripts": {
     },
-    "CLOUD_API_SECRET": {
-      "required": true
-    },
-    "CLOUD_NAME": {
-      "required": true
-    },
-    "DEBUG": {
-      "required": true
-    },
-    "EMAIL_BACKEND": {
-      "required": true
-    },
-    "EMAIL_HOST": {
-      "required": true
-    },
-    "EMAIL_HOST_PASSWORD": {
-      "required": true
-    },
-    "EMAIL_HOST_USER": {
-      "required": true
-    },
-    "EMAIL_PORT": {
-      "required": true
-    },
-    "EMAIL_USE_TLS": {
-      "required": true
-    },
-    "REDIS_URL": {
-      "required": true
-    },
-    "SECRET_KEY": {
-      "required": true
-    }
-  },
-  "formation": {
-  },
-  "name": "flight-booking-application",
-  "scripts": {
-  },
-  "stack": "heroku-18"
+    "stack": "heroku-18"
 }
